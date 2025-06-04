@@ -4,11 +4,15 @@ extern "C"{ void * __dso_handle = 0 ;}
 #include "myLib/asr_ws2812.h"
 
 uint32_t snid;
+
 void timerSleepProc(TimerHandle_t xTimer);
 TimerHandle_t timerSleepHandler = NULL;
 
-uint32_t brightNess;
-uint32_t volume;
+TaskHandle_t rainbowProcHandler = NULL;
+
+
+uint8_t brightNess = 255;
+uint8_t volume = 4;
 
 uint8_t R,G,B;
 
@@ -36,6 +40,19 @@ void timerSleepProc(TimerHandle_t xTimer){
 
 //   vTaskDelete(NULL);
 // }
+
+void rainbowProc(void* pvParameters)
+{
+  
+  for(;;)
+  {
+    ASR_WS2812_13.rainbowCycle(100);
+    // ASR_WS2812_13.rainbow(100);
+    delay(1000);
+  }
+  
+  vTaskDelete(NULL);
+}
 
 /*描述该功能...
 */
@@ -157,6 +174,16 @@ void ASR_CODE(){
     volume = 4;
     vol_set(volume);
     break;
+    
+   case 29: // 最高音量
+    volume = 7;
+    vol_set(volume);
+    break;
+    
+   case 30: // 最低音量
+    volume = 1;
+    vol_set(volume);
+    break;
  
    case 21: // 亮一点
     brightNess += 25;
@@ -232,6 +259,22 @@ void ASR_CODE(){
     
     xTimerStart(timerSleepHandler,0);
     break; 
+    
+   case 28: // 解除定时
+    xTimerStop(timerSleepHandler,0);
+    break;
+    
+   case 31: // 彩虹
+    vTaskResume(rainbowProcHandler);
+    break; 
+    
+   case 32: // 吃掉彩虹
+    vTaskSuspend(rainbowProcHandler);
+    
+    ASR_WS2812_13.setBrightness(brightNess);
+    ASR_WS2812_13.pixel_set_all_color(R,G,B);
+    ASR_WS2812_13.pixel_show();
+    break; 
   }
 
 }
@@ -239,7 +282,7 @@ void ASR_CODE(){
 void hardware_init(){
 
   volume = 4;
-  brightNess = 128;
+  brightNess = 255;
   vol_set(volume);
   ASR_WS2812_13.pixel_init(30);
   
@@ -247,6 +290,11 @@ void hardware_init(){
   timerSleepHandler = xTimerCreate("timerSleep", 1000 * 60 * 30, 0, 0, timerSleepProc);
   
   // xTaskCreate(app,"app",128,NULL,4,NULL);
+  
+  xTaskCreate(rainbowProc,"rainbow",128,NULL,4,&rainbowProcHandler);
+  
+  vTaskSuspend(rainbowProcHandler);
+  
   vTaskDelete(NULL);
 }
 
@@ -280,6 +328,12 @@ void setup()
   //{ID:23,keyword:"命令词",ASR:"正常亮度",ASRTO:"好的呢！"}
   //{ID:24,keyword:"命令词",ASR:"最高亮度",ASRTO:"好的呢！"}
   //{ID:25,keyword:"命令词",ASR:"最低亮度",ASRTO:"好的呢！"}
+  //{ID:28,keyword:"命令词",ASR:"解除定时",ASRTO:"好嘞！"}
+  //{ID:29,keyword:"命令词",ASR:"最高音量",ASRTO:"好！"}
+  //{ID:30,keyword:"命令词",ASR:"最低音量",ASRTO:"好！"}
+  //{ID:31,keyword:"命令词",ASR:"彩虹",ASRTO:"好！"}
+  //{ID:32,keyword:"命令词",ASR:"吃掉彩虹",ASRTO:"好嘞！遇见彩虹，吃定彩虹！"}
 }
+
 
 /** edittype="asr_procode" */
