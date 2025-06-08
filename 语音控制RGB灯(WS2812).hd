@@ -187,7 +187,7 @@ void ASR_CODE(){
  
    case 21: // 亮一点
     brightNess += 25;
-    brightNess = brightNess >= 255 ? brightNess : 255; 
+    brightNess = brightNess >= 255 ? 255 : brightNess; 
     ASR_WS2812_13.setBrightness(brightNess);
     ASR_WS2812_13.pixel_set_all_color(R,G,B);
     ASR_WS2812_13.pixel_show();
@@ -195,7 +195,7 @@ void ASR_CODE(){
     
    case 22: // 暗一点
     brightNess -= 25;
-    brightNess = brightNess <= 10 ? brightNess : 10; 
+    brightNess = brightNess <= 10 ? 10 : brightNess; 
     ASR_WS2812_13.setBrightness(brightNess);
     ASR_WS2812_13.pixel_set_all_color(R,G,B);
     ASR_WS2812_13.pixel_show();
@@ -284,7 +284,7 @@ void hardware_init(){
   volume = 4;
   brightNess = 255;
   vol_set(volume);
-  ASR_WS2812_13.pixel_init(30);
+  ASR_WS2812_13.pixel_init(30+256);
   
   
   timerSleepHandler = xTimerCreate("timerSleep", 1000 * 60 * 30, 0, 0, timerSleepProc);
@@ -301,7 +301,7 @@ void hardware_init(){
 void setup()
 {
   //{ID:0,keyword:"唤醒词",ASR:"柯南同学",ASRTO:"真相永远只有一个！"}
-  //{ID:26,keyword:"唤醒词",ASR:"艾利尔芬特",ASRTO:"我在呢，我在呢！"}
+  //{ID:26,keyword:"唤醒词",ASR:"艾利尔芬特",ASRTO:"我在的呢！"}
   //{ID:27,keyword:"唤醒词",ASR:"小明",ASRTO:"来啦！"}
   //{ID:1,keyword:"命令词",ASR:"开灯",ASRTO:"来咯！"}
   //{ID:2,keyword:"命令词",ASR:"红灯",ASRTO:"好的"}
@@ -309,9 +309,9 @@ void setup()
   //{ID:4,keyword:"命令词",ASR:"绿灯",ASRTO:"好的"}
   //{ID:5,keyword:"命令词",ASR:"黄灯",ASRTO:"好的"}
   //{ID:6,keyword:"命令词",ASR:"白灯",ASRTO:"好的"}
-  //{ID:7,keyword:"命令词",ASR:"暖光灯",ASRTO:"好的，马上执行"}
-  //{ID:8,keyword:"命令词",ASR:"夜灯",ASRTO:"好的，马上执行"}
-  //{ID:9,keyword:"命令词",ASR:"关灯",ASRTO:"好的，马上执行"}
+  //{ID:7,keyword:"命令词",ASR:"暖光灯",ASRTO:"好嘞！"}
+  //{ID:8,keyword:"命令词",ASR:"夜灯",ASRTO:"好嘞！"}
+  //{ID:9,keyword:"命令词",ASR:"关灯",ASRTO:"好！"}
   //{ID:10,keyword:"命令词",ASR:"日出模式",ASRTO:"好的呢，为您切换日出模式！"}
   //{ID:11,keyword:"命令词",ASR:"下午茶模式",ASRTO:"好的呢，为您切换下午茶模式！"}
   //{ID:12,keyword:"命令词",ASR:"阅读模式",ASRTO:"好的呢，为您切换阅读模式！"}    
@@ -331,9 +331,11 @@ void setup()
   //{ID:28,keyword:"命令词",ASR:"解除定时",ASRTO:"好嘞！"}
   //{ID:29,keyword:"命令词",ASR:"最高音量",ASRTO:"好！"}
   //{ID:30,keyword:"命令词",ASR:"最低音量",ASRTO:"好！"}
-  //{ID:31,keyword:"命令词",ASR:"彩虹",ASRTO:"好！"}
+  //{ID:31,keyword:"命令词",ASR:"彩虹",ASRTO:"来噜！"}
   //{ID:32,keyword:"命令词",ASR:"吃掉彩虹",ASRTO:"好嘞！遇见彩虹，吃定彩虹！"}
 }
+
+
 
 
 /** edittype="asr_procode" */
