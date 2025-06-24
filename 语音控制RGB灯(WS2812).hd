@@ -24,11 +24,11 @@ void ASR_CODE();
 //{playid:10001,voice:欢迎回来，你叫我艾利尔芬特吧。}
 //{playid:10002,voice:我先走啦，有事喊我吧，我随时都在。}
 
-WS2812 ASR_WS2812_13(13);
+WS2812 ASR_WS2812(4);
 
 void timerSleepProc(TimerHandle_t xTimer){
-  ASR_WS2812_13.pixel_set_all_color(0,0,0);
-  ASR_WS2812_13.pixel_show();
+  ASR_WS2812.pixel_set_all_color(0,0,0);
+  ASR_WS2812.pixel_show();
 }
 
 
@@ -46,8 +46,8 @@ void rainbowProc(void* pvParameters)
   
   for(;;)
   {
-    ASR_WS2812_13.rainbowCycle(100);
-    // ASR_WS2812_13.rainbow(100);
+    ASR_WS2812.rainbowCycle(100);
+    // ASR_WS2812.rainbow(100);
     delay(1000);
   }
   
@@ -68,72 +68,72 @@ void ASR_CODE(){
     R = 248;
     G = 141;
     B = 30;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
    case 2: // 红灯
     R = 255;
     G = 0;
     B = 0;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
    case 3: // 蓝灯
     R = 0;
     G = 0;
     B = 255;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
    case 4: // 绿灯
     R = 0;
     G = 255;
     B = 0;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
    case 5: // 黄灯
     R = 248;
     G = 215;
     B = 20;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
    case 6: // 白灯
     R = 255;
     G = 255;
     B = 255;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
     
    case 7: // 暖光灯
     R = 248;
     G = 141;
     B = 30;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
     
    case 8: // 夜灯
     R = 248;
     G = 141;
     B = 30;
-    ASR_WS2812_13.setBrightness(10);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(10);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;
     
    case 9: // 关灯
-    ASR_WS2812_13.pixel_set_all_color(0,0,0);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.pixel_set_all_color(0,0,0);
+    ASR_WS2812.pixel_show();
     break;
    
    case 14: // 大声点
@@ -188,74 +188,74 @@ void ASR_CODE(){
    case 21: // 亮一点
     brightNess += 25;
     brightNess = brightNess >= 255 ? 255 : brightNess; 
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;    
     
    case 22: // 暗一点
     brightNess -= 25;
     brightNess = brightNess <= 10 ? 10 : brightNess; 
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;    
     
    case 23: // 正常亮度
     brightNess = 128;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;  
     
    case 24: // 最高亮度
     brightNess = 255;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;   
     
    case 25: // 最低亮度
     brightNess = 10;
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;   
     
    case 10: // 日出模式
     R = 227;
     G = 171;
     B = 87;
-    ASR_WS2812_13.setBrightness(225);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(225);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break;   
 
    case 12: // 阅读模式
     R = 255;
     G = 255;
     B = 255;
-    ASR_WS2812_13.setBrightness(200);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(200);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break; 
     
    case 11: // 下午茶模式
     R = 248;
     G = 141;
     B = 30;
-    ASR_WS2812_13.setBrightness(255);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(255);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break; 
     
    case 13: // 睡眠模式
     R = 248;
     G = 141;
     B = 30;
-    ASR_WS2812_13.setBrightness(10);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(10);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     
     xTimerStart(timerSleepHandler,0);
     break; 
@@ -271,9 +271,9 @@ void ASR_CODE(){
    case 32: // 吃掉彩虹
     vTaskSuspend(rainbowProcHandler);
     
-    ASR_WS2812_13.setBrightness(brightNess);
-    ASR_WS2812_13.pixel_set_all_color(R,G,B);
-    ASR_WS2812_13.pixel_show();
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
     break; 
   }
 
@@ -284,7 +284,7 @@ void hardware_init(){
   volume = 4;
   brightNess = 255;
   vol_set(volume);
-  ASR_WS2812_13.pixel_init(30+256);
+  ASR_WS2812.pixel_init(30+256);
   
   
   timerSleepHandler = xTimerCreate("timerSleep", 1000 * 60 * 30, 0, 0, timerSleepProc);
@@ -310,12 +310,12 @@ void setup()
   //{ID:5,keyword:"命令词",ASR:"黄灯",ASRTO:"好的"}
   //{ID:6,keyword:"命令词",ASR:"白灯",ASRTO:"好的"}
   //{ID:7,keyword:"命令词",ASR:"暖光灯",ASRTO:"好嘞！"}
-  //{ID:8,keyword:"命令词",ASR:"夜灯",ASRTO:"好嘞！"}
+  //{ID:8,keyword:"命令词",ASR:"夜灯",ASRTO:"来噜！"}
   //{ID:9,keyword:"命令词",ASR:"关灯",ASRTO:"好！"}
-  //{ID:10,keyword:"命令词",ASR:"日出模式",ASRTO:"好的呢，为您切换日出模式！"}
-  //{ID:11,keyword:"命令词",ASR:"下午茶模式",ASRTO:"好的呢，为您切换下午茶模式！"}
+  //{ID:10,keyword:"命令词",ASR:"日出模式",ASRTO:"好噜，为您切换日出模式！"}
+  //{ID:11,keyword:"命令词",ASR:"下午茶模式",ASRTO:"没问题，为您切换下午茶模式！"}
   //{ID:12,keyword:"命令词",ASR:"阅读模式",ASRTO:"好的呢，为您切换阅读模式！"}    
-  //{ID:13,keyword:"命令词",ASR:"睡眠模式",ASRTO:"好的呢，为您切换睡眠模式！"}  
+  //{ID:13,keyword:"命令词",ASR:"睡眠模式",ASRTO:"好滴，晚安！"}  
   //{ID:14,keyword:"命令词",ASR:"大声点",ASRTO:"好的呢！声音调大啦！"}
   //{ID:15,keyword:"命令词",ASR:"声音大一点",ASRTO:"好的呢！声音调大啦！"}
   //{ID:16,keyword:"命令词",ASR:"最大声",ASRTO:"好的呢！声音已调到最大！"}
@@ -325,15 +325,16 @@ void setup()
   //{ID:20,keyword:"命令词",ASR:"正常音量",ASRTO:"好的呢！音量已居中！"}
   //{ID:21,keyword:"命令词",ASR:"亮一点",ASRTO:"好的呢！"}
   //{ID:22,keyword:"命令词",ASR:"暗一点",ASRTO:"好的呢！"}
-  //{ID:23,keyword:"命令词",ASR:"正常亮度",ASRTO:"好的呢！"}
+  //{ID:23,keyword:"命令词",ASR:"正常亮度",ASRTO:"好滴！"}
   //{ID:24,keyword:"命令词",ASR:"最高亮度",ASRTO:"好的呢！"}
-  //{ID:25,keyword:"命令词",ASR:"最低亮度",ASRTO:"好的呢！"}
+  //{ID:25,keyword:"命令词",ASR:"最低亮度",ASRTO:"好噢！"}
   //{ID:28,keyword:"命令词",ASR:"解除定时",ASRTO:"好嘞！"}
   //{ID:29,keyword:"命令词",ASR:"最高音量",ASRTO:"好！"}
   //{ID:30,keyword:"命令词",ASR:"最低音量",ASRTO:"好！"}
   //{ID:31,keyword:"命令词",ASR:"彩虹",ASRTO:"来噜！"}
   //{ID:32,keyword:"命令词",ASR:"吃掉彩虹",ASRTO:"好嘞！遇见彩虹，吃定彩虹！"}
 }
+
 
 
 
