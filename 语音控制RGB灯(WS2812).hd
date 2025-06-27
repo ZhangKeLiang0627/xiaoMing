@@ -275,6 +275,42 @@ void ASR_CODE(){
     ASR_WS2812.pixel_set_all_color(R,G,B);
     ASR_WS2812.pixel_show();
     break; 
+    
+    case 33: // 紫灯 
+    R = 73;
+    G = 6;
+    B = 75;
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
+    break;
+    
+    case 34: // 橙灯 
+    R = 243;
+    G = 139;
+    B = 0;
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
+    break;
+    
+    case 35: // 青灯
+    R = 17;
+    G = 211;
+    B = 188;
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
+    break;
+    
+    case 36: // 粉灯
+    R = 251;
+    G = 146;
+    B = 158;
+    ASR_WS2812.setBrightness(brightNess);
+    ASR_WS2812.pixel_set_all_color(R,G,B);
+    ASR_WS2812.pixel_show();
+    break;
   }
 
 }
@@ -333,7 +369,12 @@ void setup()
   //{ID:30,keyword:"命令词",ASR:"最低音量",ASRTO:"好！"}
   //{ID:31,keyword:"命令词",ASR:"彩虹",ASRTO:"来噜！"}
   //{ID:32,keyword:"命令词",ASR:"吃掉彩虹",ASRTO:"好嘞！遇见彩虹，吃定彩虹！"}
+  //{ID:33,keyword:"命令词",ASR:"紫灯",ASRTO:"好滴！"} 
+  //{ID:34,keyword:"命令词",ASR:"橙灯",ASRTO:"好滴！"} 
+  //{ID:35,keyword:"命令词",ASR:"青灯",ASRTO:"好啦！"} 
+  //{ID:36,keyword:"命令词",ASR:"粉灯",ASRTO:"好啦！"} 
 }
+
 
 
 
