@@ -2,6 +2,7 @@
 extern "C"{ void * __dso_handle = 0 ;}
 #include "setup.h"
 #include "myLib/asr_ws2812.h"
+#include "HardwareSerial.h"
 
 uint32_t snid;
 
@@ -311,22 +312,63 @@ void ASR_CODE(){
     ASR_WS2812.pixel_set_all_color(R,G,B);
     ASR_WS2812.pixel_show();
     break;
+    
+    case 37: // 学习打开空调
+    Serial1.write("fs00");
+    break;
+    
+    case 38: // 学习关闭空调
+    Serial1.write("fs01");
+    break;
+    
+    case 39: // 打开空调
+    Serial1.write("xx00");
+    break;
+    
+    case 40: // 关闭空调
+    Serial1.write("xx01");
+    break;
+    
+    case 41: // 学习打开台灯
+    Serial1.write("xx02");
+    break;
+    
+    case 42: // 学习关闭台灯
+    Serial1.write("xx03");
+    break;
+    
+    case 43: // 打开台灯
+    Serial1.write("xx02");
+    break;
+    
+    case 44: // 关闭台灯
+    Serial1.write("xx03");
+    break;
   }
 
 }
 
 void hardware_init(){
-
+  
+  // UART_Init
+  setPinFun(2,FORTH_FUNCTION);
+  setPinFun(3,FORTH_FUNCTION);
+  Serial1.begin(9600);
+  
+  // WS2812_Init
+  ASR_WS2812.pixel_init(30+256);
+  
+  // Param_Init
   volume = 4;
   brightNess = 255;
   vol_set(volume);
-  ASR_WS2812.pixel_init(30+256);
   
-  
+  // Timer_Init
   timerSleepHandler = xTimerCreate("timerSleep", 1000 * 60 * 30, 0, 0, timerSleepProc);
   
   // xTaskCreate(app,"app",128,NULL,4,NULL);
   
+  // Rainbow_Create
   xTaskCreate(rainbowProc,"rainbow",128,NULL,4,&rainbowProcHandler);
   
   vTaskSuspend(rainbowProcHandler);
@@ -373,7 +415,21 @@ void setup()
   //{ID:34,keyword:"命令词",ASR:"橙灯",ASRTO:"好滴！"} 
   //{ID:35,keyword:"命令词",ASR:"青灯",ASRTO:"好啦！"} 
   //{ID:36,keyword:"命令词",ASR:"粉灯",ASRTO:"好啦！"} 
+  
+  //{ID:37,keyword:"命令词",ASR:"学习打开空调",ASRTO:"开始学习！"} 
+  //{ID:38,keyword:"命令词",ASR:"学习关闭空调",ASRTO:"开始学习啦！"} 
+  //{ID:39,keyword:"命令词",ASR:"打开空调",ASRTO:"好啦！"} 
+  //{ID:40,keyword:"命令词",ASR:"关闭空调",ASRTO:"好啦！"} 
+  //{ID:41,keyword:"命令词",ASR:"学习打开台灯",ASRTO:"好啦！"} 
+  //{ID:42,keyword:"命令词",ASR:"学习关闭台灯",ASRTO:"好啦！"} 
+  //{ID:43,keyword:"命令词",ASR:"打开台灯",ASRTO:"好噜！"} 
+  //{ID:44,keyword:"命令词",ASR:"关闭台灯",ASRTO:"好噜！"} 
+  //{ID:45,keyword:"命令词",ASR:"学习台灯亮一点",ASRTO:"好啦！"} 
+  //{ID:46,keyword:"命令词",ASR:"学习台灯暖一点",ASRTO:"好啦！"} 
+  //{ID:47,keyword:"命令词",ASR:"台灯亮一点",ASRTO:"好嘞！"} 
+  //{ID:48,keyword:"命令词",ASR:"台灯暖一点",ASRTO:"好嘞！"} 
 }
+
 
 
 
