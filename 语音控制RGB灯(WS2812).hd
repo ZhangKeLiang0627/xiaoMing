@@ -313,6 +313,7 @@ void ASR_CODE(){
     ASR_WS2812.pixel_show();
     break;
     
+    // 红外遥控
     case 37: // 学习打开空调
     Serial1.write("xx00");
     break;
@@ -367,55 +368,174 @@ void ASR_CODE(){
     
     case 50: // 空调二十一度
     Serial1.write("fs12");
-    break;       
+    break;
+
+    case 51: // 学习打开氛围灯
+      Serial1.write("xx14");
+      break;
+
+    case 52: // 学习关闭氛围灯
+      Serial1.write("xx16");
+      break;
+
+    case 53: // 打开氛围灯
+      Serial1.write("fs14");
+      break;
+
+    case 54: // 关闭氛围灯
+      Serial1.write("fs16");
+      break;
+
+    case 55: // 学习氛围灯变亮
+      Serial1.write("xx18");
+      break;
+
+    case 56: // 学习氛围灯变暗
+      Serial1.write("xx20");
+      break;
+
+    case 57: // 氛围灯变亮
+      Serial1.write("fs18");
+      break;
+
+    case 58: // 氛围灯变暗
+      Serial1.write("fs20");
+      break;
+
+    case 59: // 学习氛围灯红色
+      Serial1.write("xx22");
+      break;
+
+    case 60: // 学习氛围灯绿色
+      Serial1.write("xx24");
+      break;
+
+    case 61: // 学习氛围灯蓝色
+      Serial1.write("xx26");
+      break;
+
+    case 62: // 学习氛围灯橙色
+      Serial1.write("xx28");
+      break;
     
-    
-    
-    case 61: // 学习打开桌灯
+    case 63: // 学习氛围灯青色
+      Serial1.write("xx30");
+      break;
+
+    case 64: // 学习氛围灯紫色
+      Serial1.write("xx32");
+      break;
+
+    case 65: // 学习氛围灯粉色
+      Serial1.write("xx34");
+      break;
+
+    case 66: // 学习氛围灯黄色
+      Serial1.write("xx36");
+      break;
+
+    case 67: // 学习氛围灯白色
+      Serial1.write("xx38");
+      break;
+
+    case 68: // 氛围灯红色
+      Serial1.write("fs22");
+      break;
+
+    case 69: // 氛围灯绿色
+      Serial1.write("fs24");
+      break;
+
+    case 70: // 氛围灯蓝色
+      Serial1.write("fs26");
+      break;
+
+    case 71: // 氛围灯橙色
+      Serial1.write("fs28");
+      break;
+
+    case 72: // 氛围灯青色
+      Serial1.write("fs30");
+      break;
+
+    case 73: // 氛围灯紫色
+      Serial1.write("fs32");
+      break;
+
+    case 74: // 氛围灯粉色
+      Serial1.write("fs34");
+      break;
+
+    case 75: // 氛围灯黄色
+      Serial1.write("fs36");
+      break;
+
+    case 76: // 氛围灯白色
+      Serial1.write("fs38");
+      break;
+
+    case 77: // 学习氛围灯流水
+      Serial1.write("xx40");
+      break;
+
+    case 78: // 学习流水氛围灯
+      Serial1.write("xx42");
+      break;
+
+    case 79: // 氛围灯流水
+      Serial1.write("fs40");
+      break;
+
+    case 80: // 流水氛围灯
+      Serial1.write("fs42");
+      break;
+
+    // 433无线遥控
+    case 161: // 学习打开桌灯
     Serial2.write("xx00");
     break;
     
-    case 62: // 学习关闭桌灯
+    case 162: // 学习关闭桌灯
     Serial2.write("xx02");
     break;
     
-    case 63: // 打开桌灯
+    case 163: // 打开桌灯
     Serial2.write("fs00");
     break;
     
-    case 64: // 关闭桌灯
+    case 164: // 关闭桌灯
     Serial2.write("fs02");
     break;
     
-    case 65: // 学习桌灯亮一点
+    case 165: // 学习桌灯亮一点
     Serial2.write("xx04");
     break;
     
-    case 66: // 学习桌灯暖一点
+    case 166: // 学习桌灯暖一点
     Serial2.write("xx06");
     break;
     
-    case 67: // 桌灯亮一点
+    case 167: // 桌灯亮一点
     Serial2.write("fs04");
     break;
     
-    case 68: // 桌灯暖一点
+    case 168: // 桌灯暖一点
     Serial2.write("fs06");
     break;
     
-    case 69: // 学习桌灯暗一点
+    case 169: // 学习桌灯暗一点
     Serial2.write("xx08");
     break;
     
-    case 70: // 学习桌灯冷一点
+    case 170: // 学习桌灯冷一点
     Serial2.write("xx10");
     break;
     
-    case 71: // 桌灯暗一点
+    case 171: // 桌灯暗一点
     Serial2.write("fs08");
     break;
     
-    case 72: // 桌灯冷一点
+    case 172: // 桌灯冷一点
     Serial2.write("fs10");
     break;
   }
@@ -509,23 +629,57 @@ void setup()
   //{ID:48,keyword:"命令词",ASR:"空调二十三度",ASRTO:"好啦！"} 
   //{ID:49,keyword:"命令词",ASR:"空调二十二度",ASRTO:"好啦！"}
   //{ID:50,keyword:"命令词",ASR:"空调二十一度",ASRTO:"好啦！"}
+    
+  //{ID:51,keyword:"命令词",ASR:"学习打开氛围灯",ASRTO:"开始学习啦！"}
+  //{ID:52,keyword:"命令词",ASR:"学习关闭氛围灯",ASRTO:"开始学习啦！"}
+  //{ID:53,keyword:"命令词",ASR:"打开氛围灯",ASRTO:"好啦！"}
+  //{ID:54,keyword:"命令词",ASR:"关闭氛围灯",ASRTO:"好啦！"}
+
+  //{ID:55,keyword:"命令词",ASR:"学习氛围灯变亮",ASRTO:"开始学习啦！"}
+  //{ID:56,keyword:"命令词",ASR:"学习氛围灯变暗",ASRTO:"开始学习啦！"}
+  //{ID:57,keyword:"命令词",ASR:"氛围灯变亮",ASRTO:"好啦！"}
+  //{ID:58,keyword:"命令词",ASR:"氛围灯变暗",ASRTO:"好啦！"}
+
+  //{ID:59,keyword:"命令词",ASR:"学习氛围灯红色",ASRTO:"开始学习啦！"}
+  //{ID:60,keyword:"命令词",ASR:"学习氛围灯绿色",ASRTO:"开始学习啦！"}
+  //{ID:61,keyword:"命令词",ASR:"学习氛围灯蓝色",ASRTO:"开始学习啦！"}
+  //{ID:62,keyword:"命令词",ASR:"学习氛围灯橙色",ASRTO:"开始学习啦！"}
+  //{ID:63,keyword:"命令词",ASR:"学习氛围灯青色",ASRTO:"开始学习啦！"}
+  //{ID:64,keyword:"命令词",ASR:"学习氛围灯紫色",ASRTO:"开始学习啦！"}
+  //{ID:65,keyword:"命令词",ASR:"学习氛围灯粉色",ASRTO:"开始学习啦！"}
+  //{ID:66,keyword:"命令词",ASR:"学习氛围灯黄色",ASRTO:"开始学习啦！"}
+  //{ID:67,keyword:"命令词",ASR:"学习氛围灯白色",ASRTO:"开始学习啦！"}
+  //{ID:68,keyword:"命令词",ASR:"氛围灯红色",ASRTO:"好啦！"}
+  //{ID:69,keyword:"命令词",ASR:"氛围灯绿色",ASRTO:"好啦！"}
+  //{ID:70,keyword:"命令词",ASR:"氛围灯蓝色",ASRTO:"好啦！"}
+  //{ID:71,keyword:"命令词",ASR:"氛围灯橙色",ASRTO:"好啦！"}
+  //{ID:72,keyword:"命令词",ASR:"氛围灯青色",ASRTO:"好啦！"}
+  //{ID:73,keyword:"命令词",ASR:"氛围灯紫色",ASRTO:"好啦！"}
+  //{ID:74,keyword:"命令词",ASR:"氛围灯粉色",ASRTO:"好啦！"}
+  //{ID:75,keyword:"命令词",ASR:"氛围灯黄色",ASRTO:"好啦！"}
+  //{ID:76,keyword:"命令词",ASR:"氛围灯白色",ASRTO:"好啦！"}
+
+  //{ID:77,keyword:"命令词",ASR:"学习氛围灯流水",ASRTO:"开始学习啦！"}
+  //{ID:78,keyword:"命令词",ASR:"学习流水氛围灯",ASRTO:"开始学习啦！"}
+  //{ID:79,keyword:"命令词",ASR:"氛围灯流水",ASRTO:"好啦！"}
+  //{ID:80,keyword:"命令词",ASR:"流水氛围灯",ASRTO:"好啦！"}
+
+  //{ID:161,keyword:"命令词",ASR:"学习打开桌灯",ASRTO:"开始学习啦！"} 
+  //{ID:162,keyword:"命令词",ASR:"学习关闭桌灯",ASRTO:"开始学习噜！"} 
+  //{ID:163,keyword:"命令词",ASR:"打开桌灯",ASRTO:"好啦！"} 
+  //{ID:164,keyword:"命令词",ASR:"关闭桌灯",ASRTO:"好噜！"} 
   
+  //{ID:165,keyword:"命令词",ASR:"学习桌灯亮一点",ASRTO:"好啦！"} 
+  //{ID:166,keyword:"命令词",ASR:"学习桌灯暖一点",ASRTO:"好啦！"} 
+  //{ID:167,keyword:"命令词",ASR:"桌灯亮一点",ASRTO:"好嘞！"} 
+  //{ID:168,keyword:"命令词",ASR:"桌灯暖一点",ASRTO:"好嘞！"} 
   
-  //{ID:61,keyword:"命令词",ASR:"学习打开桌灯",ASRTO:"开始学习啦！"} 
-  //{ID:62,keyword:"命令词",ASR:"学习关闭桌灯",ASRTO:"开始学习噜！"} 
-  //{ID:63,keyword:"命令词",ASR:"打开桌灯",ASRTO:"好啦！"} 
-  //{ID:64,keyword:"命令词",ASR:"关闭桌灯",ASRTO:"好噜！"} 
-  
-  //{ID:65,keyword:"命令词",ASR:"学习桌灯亮一点",ASRTO:"好啦！"} 
-  //{ID:66,keyword:"命令词",ASR:"学习桌灯暖一点",ASRTO:"好啦！"} 
-  //{ID:67,keyword:"命令词",ASR:"桌灯亮一点",ASRTO:"好嘞！"} 
-  //{ID:68,keyword:"命令词",ASR:"桌灯暖一点",ASRTO:"好嘞！"} 
-  
-  //{ID:69,keyword:"命令词",ASR:"学习桌灯暗一点",ASRTO:"好啦！"} 
-  //{ID:70,keyword:"命令词",ASR:"学习桌灯冷一点",ASRTO:"好啦！"} 
-  //{ID:71,keyword:"命令词",ASR:"桌灯暗一点",ASRTO:"好嘞！"} 
-  //{ID:72,keyword:"命令词",ASR:"桌灯冷一点",ASRTO:"好嘞！"} 
+  //{ID:169,keyword:"命令词",ASR:"学习桌灯暗一点",ASRTO:"好啦！"} 
+  //{ID:170,keyword:"命令词",ASR:"学习桌灯冷一点",ASRTO:"好啦！"} 
+  //{ID:171,keyword:"命令词",ASR:"桌灯暗一点",ASRTO:"好嘞！"} 
+  //{ID:172,keyword:"命令词",ASR:"桌灯冷一点",ASRTO:"好嘞！"} 
 }
+
 
 
 
