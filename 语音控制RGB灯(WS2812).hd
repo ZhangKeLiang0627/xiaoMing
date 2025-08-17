@@ -411,15 +411,15 @@ void ASR_CODE(){
       break;
 
     case 61: // 学习氛围灯蓝色
-      Serial1.write("xx26");
+      Serial1.write("fs26");
       break;
 
     case 62: // 学习氛围灯橙色
-      Serial1.write("xx28");
+      Serial1.write("fs28");
       break;
     
     case 63: // 学习氛围灯青色
-      Serial1.write("xx30");
+      Serial1.write("fs30");
       break;
 
     case 64: // 学习氛围灯紫色
@@ -431,19 +431,19 @@ void ASR_CODE(){
       break;
 
     case 66: // 学习氛围灯黄色
-      Serial1.write("xx36");
+      Serial1.write("fs36");
       break;
 
     case 67: // 学习氛围灯白色
-      Serial1.write("xx38");
+      Serial1.write("fs38");
       break;
 
     case 68: // 氛围灯红色
-      Serial1.write("fs22");
+      Serial1.write("xx22");
       break;
 
     case 69: // 氛围灯绿色
-      Serial1.write("fs24");
+      Serial1.write("xx24");
       break;
 
     case 70: // 氛围灯蓝色
@@ -459,11 +459,11 @@ void ASR_CODE(){
       break;
 
     case 73: // 氛围灯紫色
-      Serial1.write("fs32");
+      Serial1.write("xx32");
       break;
 
     case 74: // 氛围灯粉色
-      Serial1.write("fs34");
+      Serial1.write("xx34");
       break;
 
     case 75: // 氛围灯黄色
@@ -511,7 +511,7 @@ void ASR_CODE(){
     Serial2.write("xx04");
     break;
     
-    case 166: // 学习桌灯暖一点
+    case 166: // 学习桌灯变暖
     Serial2.write("xx06");
     break;
     
@@ -519,7 +519,7 @@ void ASR_CODE(){
     Serial2.write("fs04");
     break;
     
-    case 168: // 桌灯暖一点
+    case 168: // 桌灯变暖
     Serial2.write("fs06");
     break;
     
@@ -527,18 +527,44 @@ void ASR_CODE(){
     Serial2.write("xx08");
     break;
     
-    case 170: // 学习桌灯冷一点
+    case 170: // 学习桌灯变冷
     Serial2.write("xx10");
     break;
     
     case 171: // 桌灯暗一点
     Serial2.write("fs08");
     break;
-    
-    case 172: // 桌灯冷一点
-    Serial2.write("fs10");
+
+    case 172: // 桌灯变冷
+      Serial2.write("fs10");
+      break;
+
+    case 173: // 学习打开大灯
+      Serial2.write("xx12");
+      break;
+
+    case 174: // 学习关闭大灯
+    Serial2.write("xx14");
     break;
-  }
+
+    case 175: // 打开大灯
+    Serial2.write("fs12");
+    break;
+    
+    case 176: // 关闭大灯
+    Serial2.write("fs14");
+    break;
+
+    case 177: // 回家模式
+    
+    break;
+  
+
+    case 178: // 出门模式
+    // TODO：关闭空调，关闭大灯，关闭氛围灯，打开暖光灯
+
+    break;
+    }
 }
 
 void hardware_init(){
@@ -667,17 +693,25 @@ void setup()
   //{ID:161,keyword:"命令词",ASR:"学习打开桌灯",ASRTO:"开始学习啦！"} 
   //{ID:162,keyword:"命令词",ASR:"学习关闭桌灯",ASRTO:"开始学习噜！"} 
   //{ID:163,keyword:"命令词",ASR:"打开桌灯",ASRTO:"好啦！"} 
-  //{ID:164,keyword:"命令词",ASR:"关闭桌灯",ASRTO:"好噜！"} 
-  
-  //{ID:165,keyword:"命令词",ASR:"学习桌灯亮一点",ASRTO:"好啦！"} 
-  //{ID:166,keyword:"命令词",ASR:"学习桌灯暖一点",ASRTO:"好啦！"} 
-  //{ID:167,keyword:"命令词",ASR:"桌灯亮一点",ASRTO:"好嘞！"} 
-  //{ID:168,keyword:"命令词",ASR:"桌灯暖一点",ASRTO:"好嘞！"} 
-  
-  //{ID:169,keyword:"命令词",ASR:"学习桌灯暗一点",ASRTO:"好啦！"} 
-  //{ID:170,keyword:"命令词",ASR:"学习桌灯冷一点",ASRTO:"好啦！"} 
-  //{ID:171,keyword:"命令词",ASR:"桌灯暗一点",ASRTO:"好嘞！"} 
-  //{ID:172,keyword:"命令词",ASR:"桌灯冷一点",ASRTO:"好嘞！"} 
+  //{ID:164,keyword:"命令词",ASR:"关闭桌灯",ASRTO:"好噜！"}
+
+  //{ID:165,keyword:"命令词",ASR:"学习桌灯亮一点",ASRTO:"开始学习噜！"}
+  //{ID:166,keyword:"命令词",ASR:"学习桌灯变暖",ASRTO:"开始学习噜！"}
+  //{ID:167,keyword:"命令词",ASR:"桌灯亮一点",ASRTO:"好嘞！"}
+  //{ID:168,keyword:"命令词",ASR:"桌灯变暖",ASRTO:"好嘞！"}
+
+  //{ID:169,keyword:"命令词",ASR:"学习桌灯暗一点",ASRTO:"开始学习噜！"}
+  //{ID:170,keyword:"命令词",ASR:"学习桌灯变冷",ASRTO:"开始学习噜！"}
+  //{ID:171,keyword:"命令词",ASR:"桌灯暗一点",ASRTO:"好嘞！"}
+  //{ID:172,keyword:"命令词",ASR:"桌灯变冷",ASRTO:"好嘞！"}
+
+  //{ID:173,keyword:"命令词",ASR:"学习打开大灯",ASRTO:"开始学习噜！"}
+  //{ID:174,keyword:"命令词",ASR:"学习关闭大灯",ASRTO:"开始学习噜！"}
+  //{ID:175,keyword:"命令词",ASR:"打开大灯",ASRTO:"好嘞！"}
+  //{ID:176,keyword:"命令词",ASR:"关闭大灯",ASRTO:"好嘞！"}
+
+  //{ID:177,keyword:"命令词",ASR:"回家模式",ASRTO:"欢迎回来！"}
+  //{ID:178,keyword:"命令词",ASR:"出门模式",ASRTO:"路上小心噢，早点回来！"}
 }
 
 
