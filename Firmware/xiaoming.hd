@@ -175,514 +175,98 @@ void rainbowProc(void* pvParameters)
 
 /*描述该功能...
 */
-void ASR_CODE(){
-  //本函数是语音识别成功钩子程序
-  //运行时间越短越好，复杂控制启动新线程运行
-  //唤醒时间设置必须在ASR_CODE中才有效
-  set_state_enter_wakeup(20000);
-  //用switch分支选择，根据不同的识别成功的ID执行相应动作，点击switch左上齿轮
-  //可以增加分支项
-  switch (snid) {
-   case 1: // 开灯
-    R = 248;
-    G = 141;
-    B = 30;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-   case 2: // 红灯
-    R = 255;
-    G = 0;
-    B = 0;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-   case 3: // 蓝灯
-    R = 0;
-    G = 0;
-    B = 255;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-   case 4: // 绿灯
-    R = 0;
-    G = 255;
-    B = 0;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-   case 5: // 黄灯
-    R = 248;
-    G = 215;
-    B = 20;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-   case 6: // 白灯
-    R = 255;
-    G = 255;
-    B = 255;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-    
-   case 7: // 暖光灯
-    R = 248;
-    G = 141;
-    B = 30;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-    
-   case 8: // 夜灯
-    R = 248;
-    G = 141;
-    B = 30;
-    ASR_WS2812.setBrightness(10);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-    
-   case 9: // 关灯
-    ASR_WS2812.pixel_set_all_color(0,0,0);
-    ASR_WS2812.pixel_show();
-    break;
-   
-   case 14: // 大声点
-    volume += 1;
-    volume = volume <= 7 ? volume : 7; 
-    vol_set(volume);
-    break;
-    
-   case 15: // 声音大一点
-    volume += 1;
-    volume = volume <= 7 ? volume : 7; 
-    vol_set(volume);
-    break;
-    
-   case 16: // 最大声
-    volume = 7;
-    vol_set(volume);
-    break;
-    
-   case 17: // 小声点
-    volume -= 1;
-    volume = volume >= 1 ? volume : 1; 
-    vol_set(volume);
-    break;
-    
-   case 18: // 声音小一点
-    volume -= 1;
-    volume = volume >= 1 ? volume : 1; 
-    vol_set(volume);
-    break;
-    
-   case 19: // 最小声
-    volume = 1;
-    vol_set(volume);
-    break;
-    
-   case 20: // 正常音量
-    volume = 4;
-    vol_set(volume);
-    break;
-    
-   case 29: // 最高音量
-    volume = 7;
-    vol_set(volume);
-    break;
-    
-   case 30: // 最低音量
-    volume = 1;
-    vol_set(volume);
-    break;
- 
-   case 21: // 亮一点
-    brightNess += 25;
-    brightNess = brightNess >= 255 ? 255 : brightNess; 
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;    
-    
-   case 22: // 暗一点
-    brightNess -= 25;
-    brightNess = brightNess <= 10 ? 10 : brightNess; 
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;    
-    
-   case 23: // 正常亮度
-    brightNess = 128;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;  
-    
-   case 24: // 最高亮度
-    brightNess = 255;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;   
-    
-   case 25: // 最低亮度
-    brightNess = 10;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;   
-    
-   case 10: // 日出模式
-    R = 227;
-    G = 171;
-    B = 87;
-    ASR_WS2812.setBrightness(225);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;   
+// ============================================================
+// 辅助函数
+// ============================================================
 
-   case 12: // 阅读模式
-    R = 255;
-    G = 255;
-    B = 255;
-    ASR_WS2812.setBrightness(200);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break; 
-    
-   case 11: // 下午茶模式
-    R = 248;
-    G = 141;
-    B = 30;
-    ASR_WS2812.setBrightness(255);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break; 
-    
-   case 13: // 睡眠模式
-    R = 248;
-    G = 141;
-    B = 30;
-    ASR_WS2812.setBrightness(10);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    
-    xTimerStart(timerSleepHandler,0);
-    break; 
-    
-   case 28: // 解除定时
-    xTimerStop(timerSleepHandler,0);
-    break;
-    
-   case 31: // 彩虹
-    vTaskResume(rainbowProcHandler);
-    break; 
-    
-   case 32: // 吃掉彩虹
-    vTaskSuspend(rainbowProcHandler);
-    
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break; 
-    
-    case 33: // 紫灯 
-    R = 73;
-    G = 6;
-    B = 75;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-    
-    case 34: // 橙灯 
-    R = 243;
-    G = 139;
-    B = 0;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-    
-    case 35: // 青灯
-    R = 17;
-    G = 211;
-    B = 188;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-    
-    case 36: // 粉灯
-    R = 251;
-    G = 146;
-    B = 158;
-    ASR_WS2812.setBrightness(brightNess);
-    ASR_WS2812.pixel_set_all_color(R,G,B);
-    ASR_WS2812.pixel_show();
-    break;
-    
-    // 红外遥控
-    case 37: // 学习打开空调
-    Serial1.write("xx00");
-    break;
-    
-    case 38: // 学习关闭空调
-    Serial1.write("xx02");
-    break;
-    
-    case 39: // 打开空调
-    Serial1.write("fs00");
-    break;
-    
-    case 40: // 关闭空调
-    Serial1.write("fs02");
-    break;
-    
-    case 41: // 学习空调二十五度
-    Serial1.write("xx04");
-    break;
-    
-    case 42: // 学习空调二十四度
-    Serial1.write("xx06");
-    break;
-    
-    case 43: // 学习空调二十三度
-    Serial1.write("xx08");
-    break;
-    
-    case 44: // 学习空调二十二度
-    Serial1.write("xx10");
-    break;
-    
-    case 45: // 学习空调二十一度
-    Serial1.write("xx12");
-    break;
-    
-    case 46: // 空调二十五度
-    Serial1.write("fs04");
-    break;
-    
-    case 47: // 空调二十四度
-    Serial1.write("fs06");
-    break;
-    
-    case 48: // 空调二十三度
-    Serial1.write("fs08");
-    break;
-    
-    case 49: // 空调二十二度
-    Serial1.write("fs10");
-    break;    
-    
-    case 50: // 空调二十一度
-    Serial1.write("fs12");
-    break;
+// 按固定亮度或当前亮度点亮灯带（applyBrightness=false 时跳过 setBrightness 与 R/G/B 记录）
+// 注意：必须同步 R/G/B 全局（原代码每个颜色 case 都这么做），供"亮一点/暗一点/吃掉彩虹"重绘
+static void lampSetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t brightness, bool fixedBrightness, bool applyBrightness) {
+  if (applyBrightness) {
+    R = r; G = g; B = b;
+    uint8_t br = fixedBrightness ? brightness : brightNess;
+    ASR_WS2812.setBrightness(br);
+  }
+  ASR_WS2812.pixel_set_all_color(r, g, b);
+  ASR_WS2812.pixel_show();
+}
 
-    case 51: // 学习打开氛围灯
-      Serial1.write("xx14");
-      break;
-
-    case 52: // 学习关闭氛围灯
-      Serial1.write("xx16");
-      break;
-
-    case 53: // 打开氛围灯
-      Serial1.write("fs14");
-      break;
-
-    case 54: // 关闭氛围灯
-      Serial1.write("fs16");
-      break;
-
-    case 55: // 学习氛围灯变亮
-      Serial1.write("xx18");
-      break;
-
-    case 56: // 学习氛围灯变暗
-      Serial1.write("xx20");
-      break;
-
-    case 57: // 氛围灯变亮
-      Serial1.write("fs18");
-      break;
-
-    case 58: // 氛围灯变暗
-      Serial1.write("fs20");
-      break;
-
-    case 59: // 学习氛围灯红色
-      Serial1.write("xx22");
-      break;
-
-    case 60: // 学习氛围灯绿色
-      Serial1.write("xx24");
-      break;
-
-    case 61: // 学习氛围灯蓝色
-      Serial1.write("xx26");
-      break;
-
-    case 62: // 学习氛围灯橙色
-      Serial1.write("xx28");
-      break;
-    
-    case 63: // 学习氛围灯青色
-      Serial1.write("xx30");
-      break;
-
-    case 64: // 学习氛围灯紫色
-      Serial1.write("xx32");
-      break;
-
-    case 65: // 学习氛围灯粉色
-      Serial1.write("xx34");
-      break;
-
-    case 66: // 学习氛围灯黄色
-      Serial1.write("xx36");
-      break;
-
-    case 67: // 学习氛围灯白色
-      Serial1.write("xx38");
-      break;
-
-    case 68: // 氛围灯红色
-      Serial1.write("fs22");
-      break;
-
-    case 69: // 氛围灯绿色
-      Serial1.write("fs24");
-      break;
-
-    case 70: // 氛围灯蓝色
-      Serial1.write("fs26");
-      break;
-
-    case 71: // 氛围灯橙色
-      Serial1.write("fs28");
-      break;
-
-    case 72: // 氛围灯青色
-      Serial1.write("fs30");
-      break;
-
-    case 73: // 氛围灯紫色
-      Serial1.write("fs32");
-      break;
-
-    case 74: // 氛围灯粉色
-      Serial1.write("fs34");
-      break;
-
-    case 75: // 氛围灯黄色
-      Serial1.write("fs36");
-      break;
-
-    case 76: // 氛围灯白色
-      Serial1.write("fs38");
-      break;
-
-    case 77: // 学习氛围灯流水
-      Serial1.write("xx40");
-      break;
-
-    case 78: // 学习流水氛围灯
-      Serial1.write("xx42");
-      break;
-
-    case 79: // 氛围灯流水
-      Serial1.write("fs40");
-      break;
-
-    case 80: // 流水氛围灯
-      Serial1.write("fs42");
-      break;
-
-    // 433无线遥控
-    case 161: // 学习打开桌灯
-    Serial2.write("xx00");
-    break;
-    
-    case 162: // 学习关闭桌灯
-    Serial2.write("xx02");
-    break;
-    
-    case 163: // 打开桌灯
-    Serial2.write("fs00");
-    break;
-    
-    case 164: // 关闭桌灯
-    Serial2.write("fs02");
-    break;
-    
-    case 165: // 学习桌灯亮一点
-    Serial2.write("xx04");
-    break;
-    
-    case 166: // 学习桌灯变暖
-    Serial2.write("xx06");
-    break;
-    
-    case 167: // 桌灯亮一点
-    Serial2.write("fs04");
-    break;
-    
-    case 168: // 桌灯变暖
-    Serial2.write("fs06");
-    break;
-    
-    case 169: // 学习桌灯暗一点
-    Serial2.write("xx08");
-    break;
-    
-    case 170: // 学习桌灯变冷
-    Serial2.write("xx10");
-    break;
-    
-    case 171: // 桌灯暗一点
-    Serial2.write("fs08");
-    break;
-
-    case 172: // 桌灯变冷
-      Serial2.write("fs10");
-      break;
-
-    case 173: // 学习打开大灯
-      Serial2.write("xx12");
-      break;
-
-    case 174: // 学习关闭大灯
-    Serial2.write("xx14");
-    break;
-
-    case 175: // 打开大灯
-    Serial2.write("fs12");
-    break;
-    
-    case 176: // 关闭大灯
-    Serial2.write("fs14");
-    break;
-
-    case 177: // 回家模式
-    
-    break;
-  
-
-    case 178: // 出门模式
-    // TODO：关闭空调，关闭大灯，关闭氛围灯，打开暖光灯
-
-    break;
+// 颜色表查询
+static bool findAndApplyColor(uint32_t id) {
+  for (uint32_t i = 0; i < ARRAY_SIZE(COLOR_TABLE); i++) {
+    if (COLOR_TABLE[i].snid == id) {
+      const ColorCmd &c = COLOR_TABLE[i];
+      lampSetColor(c.r, c.g, c.b, c.brightness, c.fixedBrightness, c.applyBrightness);
+      return true;
     }
+  }
+  return false;
+}
+
+// 红外 / 433 指令表查询
+static bool findAndSendRm(uint32_t id) {
+  for (uint32_t i = 0; i < ARRAY_SIZE(RM_TABLE); i++) {
+    if (RM_TABLE[i].snid == id) {
+      const RmCmd &c = RM_TABLE[i];
+      if (c.port == 1)      Serial1.write(c.cmd);
+      else if (c.port == 2) Serial2.write(c.cmd);
+      return true;
+    }
+  }
+  return false;
+}
+
+// 音量设置（钳制 1..7）
+static void setVolume(uint8_t v) {
+  volume = (v > 7) ? 7 : ((v < 1) ? 1 : v);
+  vol_set(volume);
+}
+
+// 亮度调节后刷新为当前 R/G/B
+static void refreshLamp() {
+  ASR_WS2812.setBrightness(brightNess);
+  ASR_WS2812.pixel_set_all_color(R, G, B);
+  ASR_WS2812.pixel_show();
+}
+
+// ============================================================
+// 特殊逻辑：音量 / 亮度 / 彩虹 / 睡眠定时 / 回家出门
+// ============================================================
+static void handleSpecials(uint32_t id) {
+  switch (id) {
+    // 音量
+    case 14: case 15: setVolume(volume + 1); break;   // 大声点 / 声音大一点
+    case 16: case 29: setVolume(7);          break;   // 最大声 / 最高音量
+    case 17: case 18: setVolume(volume - 1); break;   // 小声点 / 声音小一点
+    case 19: case 30: setVolume(1);          break;   // 最小声 / 最低音量
+    case 20: setVolume(4);                   break;   // 正常音量
+    // 亮度（用 int 中间值钳制，修复 uint8 回绕 bug）
+    case 21: brightNess = ((int)brightNess + 25 > 255) ? 255 : brightNess + 25; refreshLamp(); break;  // 亮一点
+    case 22: brightNess = ((int)brightNess - 25 <  10) ?  10 : brightNess - 25; refreshLamp(); break;  // 暗一点
+    case 23: brightNess = 128; refreshLamp(); break;   // 正常亮度
+    case 24: brightNess = 255; refreshLamp(); break;   // 最高亮度
+    case 25: brightNess =  10; refreshLamp(); break;   // 最低亮度
+    // 彩虹
+    case 31: vTaskResume(rainbowProcHandler); break;   // 彩虹
+    case 32: vTaskSuspend(rainbowProcHandler); lampSetColor(R, G, B, brightNess, false, true); break;  // 吃掉彩虹
+    // 睡眠定时
+    case 13: lampSetColor(248, 141, 30, 10, true, true); xTimerStart(timerSleepHandler, 0); break;  // 睡眠模式
+    case 28: xTimerStop(timerSleepHandler, 0); break;  // 解除定时
+    // 回家 / 出门（待实现）
+    case 177: /* 回家模式 */ break;
+    case 178: /* TODO：关闭空调，关闭大灯，关闭氛围灯，打开暖光灯 */ break;
+    default: break;
+  }
+}
+
+/* 语音识别成功钩子程序：查颜色表 → 查指令表 → 特殊逻辑 */
+void ASR_CODE() {
+  // 唤醒时间设置必须在 ASR_CODE 中才有效
+  set_state_enter_wakeup(20000);
+
+  if (findAndApplyColor(snid)) return;   // 1) 多色灯光 / 场景
+  if (findAndSendRm(snid))      return;   // 2) 红外 / 433 学习与发射
+  handleSpecials(snid);                  // 3) 音量 / 亮度 / 彩虹 / 定时等
 }
 
 void hardware_init(){
