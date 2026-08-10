@@ -210,6 +210,7 @@ static bool findAndSendRm(uint32_t id) {
       const RmCmd &c = RM_TABLE[i];
       if (c.port == 1)      Serial1.write(c.cmd);
       else if (c.port == 2) Serial2.write(c.cmd);
+      else return false;   // 未知端口：视为未处理
       return true;
     }
   }
