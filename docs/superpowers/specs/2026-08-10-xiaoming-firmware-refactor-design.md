@@ -24,7 +24,7 @@
 
 两张静态表 + 一个特殊逻辑 handler，`ASR_CODE` 三步分发。
 
-### 颜色表 `COLOR_TABLE`（15 行）
+### 颜色表 `COLOR_TABLE`（16 行）
 
 结构体：`{ snid, r, g, b, brightness, fixedBrightness, applyBrightness }`
 
@@ -70,10 +70,10 @@ set_state_enter_wakeup(20000);
 ## 验证清单
 
 - 表行保留原注释，可对照原代码 diff
-- `static_assert` 校验表行数（15 / 60），防漏行
+- `static_assert` 校验表行数（16 / 60），防漏行
 - 脚本核对每个 snid 恰好出现一次（颜色表 + 指令表 + 特殊逻辑）
 - 用户在 IDE 中编译实测
 
 ## 覆盖的 snid 全集
 
-1–36、37–80、161–178，无重复、无遗漏。
+1–25、28–36、37–80、161–178（26/27 为唤醒词，不在 switch 内），共 96 个，无重复、无遗漏。
