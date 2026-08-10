@@ -8,17 +8,12 @@ uint32_t snid;
 
 void timerSleepProc(TimerHandle_t xTimer);
 TimerHandle_t timerSleepHandler = NULL;
-
 TaskHandle_t rainbowProcHandler = NULL;
-
 
 uint8_t brightNess = 255;
 uint8_t volume = 4;
-
 uint8_t R,G,B;
 
-
-// void app();
 void ASR_CODE();
 
 //{speak:小英-高兴,vol:10,speed:12,platform:haohaodada,version:V3}
@@ -150,19 +145,8 @@ void timerSleepProc(TimerHandle_t xTimer){
   ASR_WS2812.pixel_show();
 }
 
-
-// void app(){
-
-//   while (1) {
-
-//     }
-
-//   vTaskDelete(NULL);
-// }
-
 void rainbowProc(void* pvParameters)
 {
-  
   for(;;)
   {
     ASR_WS2812.rainbowCycle(100);
@@ -173,8 +157,6 @@ void rainbowProc(void* pvParameters)
   vTaskDelete(NULL);
 }
 
-/*描述该功能...
-*/
 // ============================================================
 // 辅助函数
 // ============================================================
@@ -293,11 +275,8 @@ void hardware_init(){
   // Timer_Init
   timerSleepHandler = xTimerCreate("timerSleep", 1000 * 60 * 30, 0, 0, timerSleepProc);
   
-  // xTaskCreate(app,"app",128,NULL,4,NULL);
-  
   // Rainbow_Create
   xTaskCreate(rainbowProc,"rainbow",128,NULL,4,&rainbowProcHandler);
-  
   vTaskSuspend(rainbowProcHandler);
   
   vTaskDelete(NULL);
@@ -416,13 +395,5 @@ void setup()
   //{ID:177,keyword:"命令词",ASR:"回家模式",ASRTO:"欢迎回来！"}
   //{ID:178,keyword:"命令词",ASR:"出门模式",ASRTO:"路上小心噢，早点回来！"}
 }
-
-
-
-
-
-
-
-
 
 /** edittype="asr_procode" */
