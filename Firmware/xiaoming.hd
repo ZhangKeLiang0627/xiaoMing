@@ -411,15 +411,15 @@ void ASR_CODE(){
       break;
 
     case 61: // 学习氛围灯蓝色
-      Serial1.write("fs26");
+      Serial1.write("xx26");
       break;
 
     case 62: // 学习氛围灯橙色
-      Serial1.write("fs28");
+      Serial1.write("xx28");
       break;
     
     case 63: // 学习氛围灯青色
-      Serial1.write("fs30");
+      Serial1.write("xx30");
       break;
 
     case 64: // 学习氛围灯紫色
@@ -431,19 +431,19 @@ void ASR_CODE(){
       break;
 
     case 66: // 学习氛围灯黄色
-      Serial1.write("fs36");
+      Serial1.write("xx36");
       break;
 
     case 67: // 学习氛围灯白色
-      Serial1.write("fs38");
+      Serial1.write("xx38");
       break;
 
     case 68: // 氛围灯红色
-      Serial1.write("xx22");
+      Serial1.write("fs22");
       break;
 
     case 69: // 氛围灯绿色
-      Serial1.write("xx24");
+      Serial1.write("fs24");
       break;
 
     case 70: // 氛围灯蓝色
@@ -459,11 +459,11 @@ void ASR_CODE(){
       break;
 
     case 73: // 氛围灯紫色
-      Serial1.write("xx32");
+      Serial1.write("fs32");
       break;
 
     case 74: // 氛围灯粉色
-      Serial1.write("xx34");
+      Serial1.write("fs34");
       break;
 
     case 75: // 氛围灯黄色
