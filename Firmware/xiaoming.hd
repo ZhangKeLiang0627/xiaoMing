@@ -123,6 +123,11 @@ static const RmCmd RM_TABLE[] = {
   {  79,  20, false },  // 氛围灯流水
   {  78,  21, true  },  // 学习流水氛围灯
   {  80,  21, false },  // 流水氛围灯
+  // ---- 红外 · 投影仪（槽 022-023）----
+  {  81,  22, true  },  // 学习打开投影仪
+  {  83,  22, false },  // 打开投影仪
+  {  82,  23, true  },  // 学习关闭投影仪
+  {  84,  23, false },  // 关闭投影仪
   // ---- 射频 433 · 桌灯 / 大灯（槽 100-107）----
   { 161, 100, true  },  // 学习打开桌灯
   { 163, 100, false },  // 打开桌灯
@@ -145,7 +150,7 @@ static const RmCmd RM_TABLE[] = {
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 #define STATIC_ASSERT(cond, name) typedef char static_assert_##name[(cond) ? 1 : -1]
 STATIC_ASSERT(ARRAY_SIZE(COLOR_TABLE) == 16, color_table_size);
-STATIC_ASSERT(ARRAY_SIZE(RM_TABLE) == 60, rm_table_size);
+STATIC_ASSERT(ARRAY_SIZE(RM_TABLE) == 64, rm_table_size);
 
 void timerSleepProc(TimerHandle_t xTimer){
   ASR_WS2812.pixel_set_all_color(0,0,0);
@@ -396,6 +401,11 @@ void setup()
   //{ID:78,keyword:"命令词",ASR:"学习流水氛围灯",ASRTO:"开始学习啦！"}
   //{ID:79,keyword:"命令词",ASR:"氛围灯流水",ASRTO:"好啦！"}
   //{ID:80,keyword:"命令词",ASR:"流水氛围灯",ASRTO:"好啦！"}
+
+  //{ID:81,keyword:"命令词",ASR:"学习打开投影仪",ASRTO:"开始学习啦！"}
+  //{ID:82,keyword:"命令词",ASR:"学习关闭投影仪",ASRTO:"开始学习啦！"}
+  //{ID:83,keyword:"命令词",ASR:"打开投影仪",ASRTO:"好啦！"}
+  //{ID:84,keyword:"命令词",ASR:"关闭投影仪",ASRTO:"好啦！"}
 
   //{ID:161,keyword:"命令词",ASR:"学习打开桌灯",ASRTO:"开始学习啦！"} 
   //{ID:162,keyword:"命令词",ASR:"学习关闭桌灯",ASRTO:"开始学习噜！"} 
