@@ -1,5 +1,10 @@
 # xiaoMing 固件重构实施计划
 
+> ⚠️ **历史文档**：本文是 2026-08-10 当次重构的执行记录。此后串口协议已迁移到
+> [HOPE-Remote](https://github.com/ZhangKeLiang0627/HOPE-Remote)：红外与 433 合并到同一个
+> Serial1（115200 8N1），槽号区间区分介质。文中含旧 `port` 字段与 `Serial2.write` 的代码片段
+> 已不再对应实际代码，**以 [README](../../../README.md) 为准**。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 把 `Firmware/xiaoming.hd` 里约 90 个 case 的巨型 `switch` 重构为「数据驱动查表 + 特殊逻辑 handler」的三步分发，同时修复亮度调节的 uint8 回绕 bug。

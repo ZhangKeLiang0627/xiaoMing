@@ -3,6 +3,11 @@
 日期：2026-08-10
 状态：已获用户批准
 
+> ⚠️ **历史文档**：本文记录 2026-08-10 当次重构的当时状态。此后串口协议已迁移到
+> [HOPE-Remote](https://github.com/ZhangKeLiang0627/HOPE-Remote)：红外与 433 合并到同一个
+> Serial1（115200 8N1），槽号区间区分介质，`RmCmd` 的 `port` 字段已被 `slot` + `learn` 取代。
+> 文中涉及 `port` / `Serial1` / `Serial2` 的描述与当前代码不一致，**以 [README](../../../README.md) 为准**。
+
 ## 背景
 
 `Firmware/xiaoming.hd` 是 ASRPRO 语音灯箱固件（pro-code 单文件，约 720 行）。当前核心 `ASR_CODE()` 是一个约 90 个 case 的巨型 `switch`，存在大量重复：
