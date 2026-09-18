@@ -82,7 +82,7 @@
 
 > 串口波特率为 **115200**（8N1）。PA2/PA3 需与对端**交叉**连接，GND 必须共地。
 
-> 灯箱主控板（v1.2）由 **CN1** 引出 `USART1`（即上表的 PA2/PA3）。原理图、连接器定义与 BOM 见 [Hardware/README.md](Hardware/README.md)。
+> 灯箱主控板（v1.2）由 **CN1** 引出 `USART1`（即上表的 PA2/PA3）。原理图与连接器定义见 [Hardware/README.md](Hardware/README.md)。
 
 ---
 
