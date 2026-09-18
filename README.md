@@ -82,6 +82,8 @@
 
 > 串口波特率为 **115200**（8N1）。PA2/PA3 需与对端**交叉**连接，GND 必须共地。
 
+> 灯箱主控板（v1.2）由 **CN1** 引出 `USART1`（即上表的 PA2/PA3）。原理图、连接器定义与 BOM 见 [Hardware/README.md](Hardware/README.md)。
+
 ---
 
 ## 语音指令表
@@ -241,16 +243,24 @@ fs107\r\n   → 发射「关闭大灯」
 
 ```
 xiaoMing/
-├── README.md            # 本文件
-├── LICENSE              # MIT 许可证
-├── backup.cpp           # 本地代码备份（已被 .gitignore 忽略）
+├── README.md               # 本文件
+├── LICENSE                 # MIT 许可证
+├── backup.cpp              # 本地代码备份（已被 .gitignore 忽略）
 ├── Firmware/
-│   └── xiaoming.hd      # ASRPRO 固件工程（主代码）
-├── Hardware/            # 硬件资料（预留目录）
-├── Pics/                # 项目图片
-│   └── 5e28a60d....jpg  # 效果预览图
+│   └── xiaoming.hd         # ASRPRO 固件工程（主代码）
+├── Hardware/               # 硬件设计（立创EDA 专业版）
+│   ├── README.md           # 硬件说明（原理图 / 接口 / BOM）
+│   └── ProPrj_xiaoMing-v1.2_2026-09-18.epro2   # 原理图 + PCB 工程包
+├── model/                  # ASRPRO 语音模型（天问 Block 生成）
+│   ├── asr/                # 语音识别模型
+│   ├── user_file/          # 命令词配置
+│   └── voice/              # 回复语音
+├── Pics/                   # 项目图片
+│   ├── 5e28a60d....jpg     # 效果预览图
+│   └── 51e14cbc....png     # v1.2 原理图
+├── docs/                   # 固件设计与实施文档
 └── .vscode/
-    └── settings.json    # 编辑器配置（已被 .gitignore 忽略）
+    └── settings.json       # 编辑器配置（已被 .gitignore 忽略）
 ```
 
 ---
