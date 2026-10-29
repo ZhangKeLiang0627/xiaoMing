@@ -8,6 +8,12 @@ uint32_t snid;
 
 void timerSleepProc(TimerHandle_t xTimer);
 TimerHandle_t timerSleepHandler = NULL;
+
+void timerReminderProc(TimerHandle_t xTimer);
+void timerVoiceProc(void* pvParameters);
+TimerHandle_t timerReminderHandler = NULL;
+TaskHandle_t timerVoiceHandler = NULL;
+
 TaskHandle_t rainbowProcHandler = NULL;
 
 uint8_t brightNess = 255;
@@ -19,6 +25,9 @@ void ASR_CODE();
 //{speak:小英-高兴,vol:10,speed:12,platform:haohaodada,version:V3}
 //{playid:10001,voice:欢迎回来，你叫我艾利尔芬特吧。}
 //{playid:10002,voice:我先走啦，有事喊我吧，我随时都在。}
+//{playid:10004,voice:请注意，一小时定时已结束。}
+//{playid:10005,voice:请注意，半小时定时已结束。}
+//{playid:10006,voice:请注意，十五分钟定时已结束。}
 
 WS2812 ASR_WS2812(4);
 
@@ -147,14 +156,49 @@ static const RmCmd RM_TABLE[] = {
   { 176, 107, false },  // 关闭大灯
 };
 
+// ============================================================
+// 数据驱动：定时提醒指令表（独立于睡眠模式定时器）
+//   durationMs 为真实毫秒，入定时器前统一过 pdMS_TO_TICKS
+//   voiceId 指向 playid 声明，到时后由播报任务播放
+// ============================================================
+struct TimerCmd {
+  uint32_t snid;
+  uint32_t durationMs;
+  uint16_t voiceId;
+};
+
+static const TimerCmd TIMER_TABLE[] = {
+  { 179, 60UL * 60 * 1000, 10004 },  // 定时一小时
+  { 180, 30UL * 60 * 1000, 10005 },  // 定时半小时
+  { 181, 15UL * 60 * 1000, 10006 },  // 定时十五分钟
+};
+
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 #define STATIC_ASSERT(cond, name) typedef char static_assert_##name[(cond) ? 1 : -1]
 STATIC_ASSERT(ARRAY_SIZE(COLOR_TABLE) == 16, color_table_size);
 STATIC_ASSERT(ARRAY_SIZE(RM_TABLE) == 64, rm_table_size);
+STATIC_ASSERT(ARRAY_SIZE(TIMER_TABLE) == 3, timer_table_size);
 
 void timerSleepProc(TimerHandle_t xTimer){
   ASR_WS2812.pixel_set_all_color(0,0,0);
   ASR_WS2812.pixel_show();
+}
+
+// 到时回调只递 voiceId 给播报任务：Tmr Svc 栈仅 160 字，且 prompt_play_by_cmd_id
+// 内部会取互斥锁（可能阻塞），不能在定时器服务任务里直接播报。
+void timerReminderProc(TimerHandle_t xTimer){
+  uint32_t voiceId = (uint32_t)(uintptr_t)pvTimerGetTimerID(xTimer);
+  xTaskNotify(timerVoiceHandler, voiceId, eSetValueWithOverwrite);
+}
+
+// 只播报，不开聆听窗口：不调用 set_state_enter_wakeup，播完系统保持非唤醒态
+void timerVoiceProc(void* pvParameters){
+  uint32_t voiceId = 0;
+  for(;;){
+    if (xTaskNotifyWait(0, 0xFFFFFFFF, &voiceId, portMAX_DELAY) == pdTRUE) {
+      prompt_play_by_cmd_id((uint16_t)voiceId, -1, NULL, true);
+    }
+  }
 }
 
 void rainbowProc(void* pvParameters)
@@ -246,6 +290,27 @@ static void refreshLamp() {
   ASR_WS2812.pixel_show();
 }
 
+// 单槽提醒定时：新指令覆盖旧指令；changePeriod 会同时把未启动的定时器拉起来
+static void timerStart(uint32_t durationMs, uint16_t voiceId) {
+  vTimerSetTimerID(timerReminderHandler, (void*)(uintptr_t)voiceId);
+  xTimerChangePeriod(timerReminderHandler, pdMS_TO_TICKS(durationMs), pdMS_TO_TICKS(100));
+}
+
+static void timerCancel() {
+  xTimerStop(timerReminderHandler, pdMS_TO_TICKS(100));
+}
+
+// 定时提醒表查询
+static bool findAndStartTimer(uint32_t id) {
+  for (uint32_t i = 0; i < ARRAY_SIZE(TIMER_TABLE); i++) {
+    if (TIMER_TABLE[i].snid == id) {
+      timerStart(TIMER_TABLE[i].durationMs, TIMER_TABLE[i].voiceId);
+      return true;
+    }
+  }
+  return false;
+}
+
 // ============================================================
 // 特殊逻辑：音量 / 亮度 / 彩虹 / 睡眠定时 / 回家出门
 // ============================================================
@@ -266,9 +331,14 @@ static void handleSpecials(uint32_t id) {
     // 彩虹
     case 31: vTaskResume(rainbowProcHandler); break;   // 彩虹
     case 32: vTaskSuspend(rainbowProcHandler); lampSetColor(R, G, B, brightNess, false, true); break;  // 吃掉彩虹
-    // 睡眠定时
+    // 睡眠定时（只关灯，与定时提醒互不相干）
     case 13: lampSetColor(248, 141, 30, 10, true, true); xTimerStart(timerSleepHandler, 0); break;  // 睡眠模式
     case 28: xTimerStop(timerSleepHandler, 0); break;  // 解除定时
+    // 定时提醒
+    case 182: timerCancel(); break;  // 取消定时
+    // 退下：立即退出唤醒态，回到只监听唤醒词，播完 <inactivate> 后不再聆听
+    // 参数 0 = 不等 ASR 空闲，马上退；1 = 等当前识别处理完再退
+    case 183: exit_wakeup_deal(0); break;
     // 回家 / 出门（待实现）
     case 177: /* 回家模式 */ break;
     case 178: /* TODO：关闭空调，关闭大灯，关闭氛围灯，打开暖光灯 */ break;
@@ -283,7 +353,8 @@ void ASR_CODE() {
 
   if (findAndApplyColor(snid)) return;   // 1) 多色灯光 / 场景
   if (findAndSendRm(snid))      return;   // 2) 红外 / 433 学习与发射
-  handleSpecials(snid);                  // 3) 音量 / 亮度 / 彩虹 / 定时等
+  if (findAndStartTimer(snid))  return;   // 3) 定时提醒
+  handleSpecials(snid);                  // 4) 音量 / 亮度 / 彩虹 / 定时等
 }
 
 void hardware_init(){
@@ -303,7 +374,9 @@ void hardware_init(){
   vol_set(volume);
   
   // Timer_Init
-  timerSleepHandler = xTimerCreate("timerSleep", 1000 * 60 * 30, 0, 0, timerSleepProc);
+  timerSleepHandler = xTimerCreate("timerSleep", pdMS_TO_TICKS(30UL * 60 * 1000), 0, 0, timerSleepProc);
+  timerReminderHandler = xTimerCreate("timerRemind", pdMS_TO_TICKS(15UL * 60 * 1000), 0, 0, timerReminderProc);
+  xTaskCreate(timerVoiceProc, "timerVoice", 256, NULL, 3, &timerVoiceHandler);
   
   // Rainbow_Create
   xTaskCreate(rainbowProc,"rainbow",128,NULL,4,&rainbowProcHandler);
@@ -314,8 +387,8 @@ void hardware_init(){
 
 void setup()
 {
-  //{ID:0,keyword:"唤醒词",ASR:"柯南同学",ASRTO:"真相永远只有一个！"}
-  //{ID:26,keyword:"唤醒词",ASR:"艾利尔芬特",ASRTO:"我在的呢！"}
+  // 已停用唤醒词：柯南同学（原回复：真相永远只有一个！）
+  // 已停用唤醒词：艾利尔芬特（原回复：我在的呢！）
   //{ID:27,keyword:"唤醒词",ASR:"小明",ASRTO:"来啦！"}
   //{ID:1,keyword:"命令词",ASR:"开灯",ASRTO:"来咯！"}
   //{ID:2,keyword:"命令词",ASR:"红灯",ASRTO:"好的"}
@@ -429,6 +502,13 @@ void setup()
 
   //{ID:177,keyword:"命令词",ASR:"回家模式",ASRTO:"欢迎回来！"}
   //{ID:178,keyword:"命令词",ASR:"出门模式",ASRTO:"路上小心噢，早点回来！"}
+
+  //{ID:179,keyword:"命令词",ASR:"定时一小时",ASRTO:"好的，一小时后提醒您！"}
+  //{ID:180,keyword:"命令词",ASR:"定时半小时",ASRTO:"好的，半小时后提醒您！"}
+  //{ID:181,keyword:"命令词",ASR:"定时十五分钟",ASRTO:"好的，十五分钟后提醒您！"}
+  //{ID:182,keyword:"命令词",ASR:"取消定时",ASRTO:"好的，已取消定时！"}
+  //{ID:183,keyword:"命令词",ASR:"退下",ASRTO:""}
 }
+
 
 /** edittype="asr_procode" */
