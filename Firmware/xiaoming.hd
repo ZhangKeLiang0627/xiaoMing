@@ -389,7 +389,7 @@ void setup()
 {
   // 已停用唤醒词：柯南同学（原回复：真相永远只有一个！）
   // 已停用唤醒词：艾利尔芬特（原回复：我在的呢！）
-  //{ID:27,keyword:"唤醒词",ASR:"小明",ASRTO:"来啦！"}
+  //{ID:27,keyword:"唤醒词",ASR:"小明同学",ASRTO:"来啦！"}
   //{ID:1,keyword:"命令词",ASR:"开灯",ASRTO:"来咯！"}
   //{ID:2,keyword:"命令词",ASR:"红灯",ASRTO:"好的"}
   //{ID:3,keyword:"命令词",ASR:"蓝灯",ASRTO:"好的"}
@@ -509,6 +509,7 @@ void setup()
   //{ID:182,keyword:"命令词",ASR:"取消定时",ASRTO:"好的，已取消定时！"}
   //{ID:183,keyword:"命令词",ASR:"退下",ASRTO:""}
 }
+
 
 
 /** edittype="asr_procode" */
