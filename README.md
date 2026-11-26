@@ -315,17 +315,6 @@ xiaoMing/
 
 ---
 
-## 已知问题 & 待办
-
-1. **回家模式 / 出门模式**（`case 177/178`）：尚未实现，`case 178` 仅有注释 TODO。
-2. **红外学习是阻塞操作**：HOPE-Remote 的 `xxNNN`（红外）会一直阻塞在采集循环里，直到录到边沿或超时。说「学习…」后需立刻对着 HOPE-Remote 的接收头按原遥控器。
-3. **不回读对端回包**：本固件只发不收，`Serial1`（PA3）当前未解析对端返回的 `REC/FS xxx OK`。若要上报「学习成功/失败」，需增加行接收解析。
-4. **433 发射档位固定**：目前统一用 `fsNNN` 默认参数（8 帧 × 1 簇）。若某个目标设备需要短按或长按时序，需改发 `fssNNN` / `fslNNN`，可在 `RM_TABLE` 中按指令区分。
-5. **FreeRTOS tick 是 2 ms**：ASRPRO SDK 的 `configTICK_RATE_HZ = 500`，`xTimerCreate` 收的是 tick 数而不是毫秒。本工程一律走 `pdMS_TO_TICKS(毫秒)`，别再手写裸数字（历史代码 `1000*60*30` 实际是 60 分钟，已修正为 `pdMS_TO_TICKS(30UL*60*1000)`）。
-6. **播报不能在定时器服务任务里做**：`Tmr Svc` 栈仅 160 字，且 `prompt_play_by_cmd_id` 内部要取互斥锁。定时器回调只 `xTaskNotify`，播报交给 `timerVoiceProc`（栈 256 字）。
-7. **定时提醒是掉电不保存的**：只在 RAM 里跑，重启即丢，且一次只挂一档。
-
----
 
 ## License
 
